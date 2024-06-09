@@ -9,9 +9,12 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+
     resources :categories
     resources :books
     resources :reservations
     resources :borrows
+    end
   end
 end
