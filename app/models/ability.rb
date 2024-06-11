@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Ability
   include CanCan::Ability
 
@@ -29,13 +27,12 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
 
-  
-
     return unless user.present?
+
     can :read, Book
     can :manage, Borrow
     can :read, Category
-    can :manage, Reservation 
+    can :manage, Reservation
 
     return unless user.admin?
 

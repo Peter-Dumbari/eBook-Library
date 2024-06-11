@@ -4,8 +4,8 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _options = {})
-    unless resource.persisted? && resource.status != 'Active'
-      render json: 'Your account have been deactivated!', status: :unauthorized
+    unless resource.persisted?
+      render json: 'Invalid credentials please check and try again', status: :unauthorized
       return
     end
 
