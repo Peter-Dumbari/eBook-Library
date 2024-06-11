@@ -8,6 +8,6 @@ class Book < ApplicationRecord
   # Validations
   validates :title, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :author, presence: true, length: { maximum: 255 }
-  validates :published_date, presence: true
   validates :category_id, presence: true
+  validates :file_url, presence: true
 end

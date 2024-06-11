@@ -2,8 +2,8 @@ class Api::V1::BooksController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    books = Book.includes(:image)
-    render json: books, include: %i[image]
+    books = Book.includes(:images)
+    render json: books, include: %i[images]
   end
 
   def show
@@ -39,16 +39,8 @@ class Api::V1::BooksController < ApplicationController
 
   private
 
-  def attach_image(book)
-    return unless params[:book][:image_file].present?
-
-    book.image ||= book.build_image
-    book.image.image_file.attach(params[:book][:image_file])
-    book.image.save
-  end
-
   def book_params
-    params.require(:book).permit(:title, :author, :description, :category_id, :recommended,
+    params.require(:book).permit(:title, :author, :description, :category_id, :recommended, :file_url,
                                  image_attributes: %i[id image_file])
   end
 end
