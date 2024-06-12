@@ -19,9 +19,15 @@ class Api::V1::ReservationsController < ApplicationController
     if reservation.save
       render json: { reservation:, message: 'Book reserved successfully' }, status: :created
     else
-      Rails.logger.debug borrow.errors.full_messages.join(', ')
+      Rails.logger.debug reservation.errors.full_messages.join(', ')
       render json: { errors: reservation.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    reservation = current_user.reservations.find(params[:id])
+    reservation.destroy
+    render json: { status: :ok, message: 'Book removed from reservation sucessfully' }
   end
 
   private

@@ -2,7 +2,7 @@ class Book < ApplicationRecord
   belongs_to :category
   has_many :borrows
   has_many :reservations
-  has_one :image, dependent: :destroy
+  has_one :image
   accepts_nested_attributes_for :image
 
   # Validations
@@ -10,4 +10,13 @@ class Book < ApplicationRecord
   validates :author, presence: true, length: { maximum: 255 }
   validates :category_id, presence: true
   validates :file_url, presence: true
+  validates :description, presence: true
+
+  def reserved?
+    reservations.exists?
+  end
+
+  def borrowed?
+    borrowings.exists?
+  end
 end

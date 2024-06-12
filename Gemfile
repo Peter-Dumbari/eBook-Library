@@ -46,6 +46,7 @@ group :development do
   # gem "spring"
 end
 
+gem 'activestorage'
 gem 'cancancan'
 gem 'devise', '~> 4.9'
 gem 'devise-jwt'
