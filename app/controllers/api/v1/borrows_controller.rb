@@ -1,5 +1,6 @@
 class Api::V1::BorrowsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   def index
     borrows = current_user.borrows.includes(:book)
@@ -9,7 +10,7 @@ class Api::V1::BorrowsController < ApplicationController
   def destroy
     borrow = current_user.borrows.find(params[:id])
     borrow.destroy
-    head :no_content
+    render json: { status: :ok, message: 'Book return sucessfully' }
   end
 
   def create
@@ -23,7 +24,7 @@ class Api::V1::BorrowsController < ApplicationController
     borrow = current_user.borrows.build(book:, due_date: 2.weeks.from_now)
 
     if borrow.save
-      render json: { borrow:, message: 'Borrowed successfully' }, status: :created
+      render json: { borrow:, message: 'Book borrowed successfully' }, status: :created
     else
       Rails.logger.debug borrow.errors.full_messages.join(', ')
       render json: { errors: borrow.errors.full_messages }, status: :unprocessable_entity

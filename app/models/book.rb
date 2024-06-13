@@ -10,4 +10,13 @@ class Book < ApplicationRecord
   validates :author, presence: true, length: { maximum: 255 }
   validates :category_id, presence: true
   validates :file_url, presence: true
+  validates :description, presence: true
+
+  def reserved?
+    reservations.exists?
+  end
+
+  def borrowed?
+    borrowings.exists?
+  end
 end
