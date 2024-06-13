@@ -2,8 +2,8 @@ class ApplicationController < ActionController::API
   # before_action :authenticate_user!
   before_action :update_allowed_parameters, if: :devise_controller?
 
-  rescue_from CanCan::AccessDenied do |exception|
-    render json: { message: exception, status: 'authorization_failed' }, status: :unauthorized
+  rescue_from CanCan::AccessDenied do |_exception|
+    render json: { message: 'Authorizations are required to perform this action' }, status: :unauthorized
   end
 
   protected

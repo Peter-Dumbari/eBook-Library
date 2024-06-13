@@ -1,6 +1,6 @@
 class Image < ApplicationRecord
   belongs_to :book
-  has_one_attached :image_file
+  has_one :image
 
-  validates :image_file, presence: true
+  validates :image_data, presence: true
 end

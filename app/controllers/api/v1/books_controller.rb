@@ -1,5 +1,6 @@
 class Api::V1::BooksController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   def index
     books = Book.includes(:image)
@@ -13,9 +14,9 @@ class Api::V1::BooksController < ApplicationController
 
   def create
     book = Book.new(book_params.except(:image_file))
-    attach_image(book) if params[:book][:image_file].present?
 
     if book.save
+      attach_image(book) if params[:book][:image_file].present?
       render json: { book:, status: :created, message: 'Book created successfully' }
     else
       render json: book.errors, status: :unprocessable_entity
@@ -49,6 +50,8 @@ class Api::V1::BooksController < ApplicationController
 
   def attach_image(book)
     image_url = params[:book][:image_file]
+    return unless image_url.present?
+
     book.build_image(image_data: image_url)
     return if book.image.save
 
