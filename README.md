@@ -29,7 +29,7 @@
 
 # 📖 eBook Library (Backend) <a id="about-project"></a>
 
-**eBook Library** is an online own by a university student, this eLibrary allow users to select categories of book he/she want, borrow the book or reserve it for further reading. it is manage by the admin which is incharge managing the books, giving recommended book for a particular categories.
+**eBook Library** is an online library own by a university student, this eLibrary allow users to select categories of book he/she want, borrow the book or reserve it for further reading. it is manage by the admin which is incharge managing the books, giving recommended book for a particular categories.
 
 ## 🛠 Built With <a id="built-with"></a>
 
