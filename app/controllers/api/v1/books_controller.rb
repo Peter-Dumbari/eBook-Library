@@ -3,8 +3,8 @@ class Api::V1::BooksController < ApplicationController
   load_and_authorize_resource
 
   def index
-    books = Book.includes(:image)
-    render json: books, include: %i[image]
+    books = Book.includes(:image, :category)
+    render json: books, include: %i[image category]
   end
 
   def show
