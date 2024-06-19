@@ -25,21 +25,24 @@ class Api::V1::BooksController < ApplicationController
 
   def fetch_by_category
     category_id = params[:category_id]
-
+  
     if category_id.present?
-      books = Book.includes(:category).where(categories: { id: category_id }).distinct
+      books = Book.includes(:category)
+                  .where(categories: { id: category_id }, recommended: true)
+                  .distinct
       render json: books, include: %i[image category]
     else
       render json: { error: 'Category ID is required' }, status: :unprocessable_entity
     end
   end
+  
 
   def create
     book = Book.new(book_params.except(:image_file))
 
     if book.save
       attach_image(book) if params[:book][:image_file].present?
-      render json: { book:, status: :created, message: 'Book created successfully' }
+      render json: { book:book, status: :created, message: 'Book created successfully' }
     else
       render json: book.errors, status: :unprocessable_entity
     end
@@ -50,7 +53,7 @@ class Api::V1::BooksController < ApplicationController
     attach_image(book) if params[:image_file].present?
 
     if book.update(book_params.except(:image_file))
-      render json: { book:, status: :ok, message: 'Book updated successfully' }
+      render json: { book:book, status: :ok, message: 'Book updated successfully' }
     else
       render json: book.errors, status: :unprocessable_entity
     end

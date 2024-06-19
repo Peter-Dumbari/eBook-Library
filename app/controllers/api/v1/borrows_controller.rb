@@ -27,10 +27,10 @@ class Api::V1::BorrowsController < ApplicationController
       return
     end
 
-    borrow = current_user.borrows.build(book:, due_date: 2.weeks.from_now)
+    borrow = current_user.borrows.build(book:book, due_date: 2.weeks.from_now)
 
     if borrow.save
-      render json: { borrow:, message: 'Book borrowed successfully' }, status: :created
+      render json: { borrow:borrow, message: 'Book borrowed successfully' }, status: :created
     else
       Rails.logger.debug borrow.errors.full_messages.join(', ')
       render json: { errors: borrow.errors.full_messages }, status: :unprocessable_entity
