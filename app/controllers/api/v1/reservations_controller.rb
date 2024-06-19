@@ -4,7 +4,7 @@ class Api::V1::ReservationsController < ApplicationController
 
   def index
     reservations = current_user.reservations.includes(:book)
-    render json: reservations, include: :book
+    render json: reservations, include: { book: { include: :image } }
   end
 
   def create
@@ -27,8 +27,12 @@ class Api::V1::ReservationsController < ApplicationController
 
   def destroy
     reservation = current_user.reservations.find(params[:id])
-    reservation.destroy
-    render json: { status: :ok, message: 'Book removed from reservation sucessfully' }
+    if reservation.destroy
+      render json: { status: :ok, message: 'Book removed from reservation sucessfully' }
+
+    else
+      render json: { message: 'something went wrong' }, status: :unprocessable_entity
+    end
   end
 
   private

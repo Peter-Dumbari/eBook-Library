@@ -1,15 +1,37 @@
 class Api::V1::BooksController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def index
-    books = Book.includes(:image, :category)
+    books = Book.includes(:image, :category).order(created_at: :desc)
     render json: books, include: %i[image category]
   end
 
   def show
     book = Book.find(params[:id])
     render json: book
+  end
+
+  def fetch_by_title
+    title = params[:title]
+    books = Book.where('title ILIKE ?', "%#{title}%")
+
+    if books.present?
+      render json: books, include: %i[image category], status: :ok
+    else
+      render json: { message: 'No books found' }, status: :not_found
+    end
+  end
+
+  def fetch_by_category
+    category_id = params[:category_id]
+
+    if category_id.present?
+      books = Book.includes(:category).where(categories: { id: category_id }).distinct
+      render json: books, include: %i[image category]
+    else
+      render json: { error: 'Category ID is required' }, status: :unprocessable_entity
+    end
   end
 
   def create

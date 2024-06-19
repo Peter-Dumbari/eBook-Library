@@ -17,6 +17,6 @@ class Book < ApplicationRecord
   end
 
   def borrowed?
-    borrowings.exists?
+    borrows.exists?
   end
 end

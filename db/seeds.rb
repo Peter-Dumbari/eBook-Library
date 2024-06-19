@@ -8,45 +8,10 @@
 
 
 categories = [
-  "Fiction",
-  "Non-Fiction",
-  "Science Fiction",
   "Fantasy",
   "Mystery",
   "Thriller",
-  "Biography",
-  "Memoir",
-  "Self-Help",
-  "Health",
-  "History",
-  "Travel",
-  "Children's",
-  "Young Adult",
-  "Classics",
-  "Romance",
-  "Horror",
-  "Science",
-  "Poetry",
-  "Art",
-  "Cookbooks",
-  "Graphic Novels",
-  "Comics",
-  "Education",
-  "Religion",
-  "Philosophy",
-  "Sports",
-  "Humor",
-  "Drama",
-  "Music",
-  "Business",
-  "Technology",
-  "Psychology",
-  "Sociology",
-  "Politics",
-  "Economics",
-  "Law",
-  "Anthology",
-  "Crime"
+
 ]
 
 categories.each do |category|
