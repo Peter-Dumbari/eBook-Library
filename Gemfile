@@ -15,7 +15,11 @@ gem 'puma', '~> 5.0'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
-
+gem 'activestorage'
+gem 'cancancan'
+gem 'devise', '~> 4.9'
+gem 'devise-jwt'
+gem 'rubocop', '>= 1.0', '< 2.0'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -46,8 +50,4 @@ group :development do
   # gem "spring"
 end
 
-gem 'activestorage'
-gem 'cancancan'
-gem 'devise', '~> 4.9'
-gem 'devise-jwt'
-gem 'rubocop', '>= 1.0', '< 2.0'
+
