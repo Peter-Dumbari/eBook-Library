@@ -25,12 +25,12 @@ class Api::V1::BooksController < ApplicationController
 
   def fetch_by_category
     category_id = params[:category_id]
-  
+
     if category_id.present?
       books = Book.includes(:category)
-                  .where(categories: { id: category_id }, recommended: true)
-                  .distinct
-  
+        .where(categories: { id: category_id }, recommended: true)
+        .distinct
+
       if books.any?
         render json: books, include: %i[image category]
       else
@@ -40,7 +40,6 @@ class Api::V1::BooksController < ApplicationController
       render json: { error: 'Category ID is required' }, status: :unprocessable_entity
     end
   end
-  
 
   def create
     book = Book.new(book_params.except(:image_file))
