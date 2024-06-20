@@ -11,7 +11,7 @@ class Api::V1::CategoriesController < ApplicationController
     category = Category.new(category_params)
 
     if category.save
-      render json: { category:, message: 'Category added succefully' }, status: :created
+      render json: { category:category, message: 'Category added succefully' }, status: :created
     else
       render json: { Error: category.error, message: 'Something was wrong' }, status: :unprocessable_entity
     end
@@ -21,7 +21,7 @@ class Api::V1::CategoriesController < ApplicationController
     category = Category.find(params[:id])
 
     if category.update(category_params)
-      render json: { category:, message: 'Category updated successfully' }, status: :ok
+      render json: { category:category, message: 'Category updated successfully' }, status: :ok
     else
       render json: { error: category.errors }, status: :unprocessable_entity
     end
