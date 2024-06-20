@@ -11,5 +11,4 @@ class User < ApplicationRecord
   has_many :reservations
   enum role: { user: 'user', admin: 'admin' }
   attr_accessor :preference
-
 end
