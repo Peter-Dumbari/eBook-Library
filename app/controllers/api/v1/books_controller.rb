@@ -3,6 +3,8 @@ class Api::V1::BooksController < ApplicationController
   # load_and_authorize_resource
 
   def index
+    Book.update_recommendations_for_user(current_user) if current_user.preference.present?
+
     books = Book.includes(:image, :category).order(created_at: :desc)
     render json: books, include: %i[image category]
   end
