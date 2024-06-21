@@ -74,7 +74,7 @@ class Api::V1::BooksController < ApplicationController
       }, status: :unprocessable_entity
     else
       book.destroy
-      render json: { message: 'Book deleted successfully' }, status: :success
+      render json: { message: 'Book deleted successfully' }, status: :ok
     end
   end
 
