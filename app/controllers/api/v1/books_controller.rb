@@ -28,7 +28,7 @@ class Api::V1::BooksController < ApplicationController
 
     if category_id.present?
       books = Book.includes(:category)
-        .where(categories: { id: category_id }, recommended: true)
+        .where(categories: { id: category_id })
         .distinct
 
       if books.any?
