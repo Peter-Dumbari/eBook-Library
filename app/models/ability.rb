@@ -31,7 +31,7 @@ class Ability
 
     can :read, Book
     can :manage, Borrow
-    can :read, Category
+    can :manage, Category
     can :manage, Reservation
 
     return unless user.admin?
