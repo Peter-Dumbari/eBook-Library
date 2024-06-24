@@ -30,7 +30,7 @@ class Ability
     can :read, Category
     return unless user.present?
 
-    can :read, Book
+    can :manage, Book
     can :manage, Borrow
     can :manage, Reservation
 
