@@ -17,6 +17,15 @@ class Book < ApplicationRecord
   end
 
   def borrowed?
-    borrowings.exists?
+    borrows.exists?
+  end
+
+  def self.update_recommendations_for_user(user)
+    preference = user.preference
+    return unless preference
+
+    # Update the recommended status for each book
+    Book.where.not(category_id: preference).update_all(recommended: false)
+    Book.where(category_id: preference).update_all(recommended: true)
   end
 end

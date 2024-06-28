@@ -14,7 +14,12 @@ Rails.application.routes.draw do
     namespace :v1 do
 
     resources :categories
-    resources :books
+    resources :books do
+      collection do
+        get 'fetch_by_title'
+        get 'fetch_by_category'
+      end
+    end
     resources :reservations
     resources :borrows
     end

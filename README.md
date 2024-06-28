@@ -54,7 +54,7 @@
 
 ## 🚀 Live Demo <a id="live-demo"></a>
 
-Live demo for the website [Live Demo](https://tams-mall.onrender.com).
+Live demo for the website [Live Demo](https://virtual-library-88xi.onrender.com).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

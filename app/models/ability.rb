@@ -27,11 +27,11 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
 
+    can :read, Category
     return unless user.present?
 
-    can :read, Book
+    can :manage, Book
     can :manage, Borrow
-    can :manage, Category
     can :manage, Reservation
 
     return unless user.admin?

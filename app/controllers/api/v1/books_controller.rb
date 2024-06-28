@@ -1,15 +1,46 @@
 class Api::V1::BooksController < ApplicationController
   before_action :authenticate_user!
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   def index
-    books = Book.includes(:image, :category)
+    Book.update_recommendations_for_user(current_user) if current_user.preference.present?
+
+    books = Book.includes(:image, :category).order(created_at: :desc)
     render json: books, include: %i[image category]
   end
 
   def show
     book = Book.find(params[:id])
     render json: book
+  end
+
+  def fetch_by_title
+    title = params[:title]
+    books = Book.where('title ILIKE ?', "%#{title}%")
+
+    if books.present?
+      render json: books, include: %i[image category], status: :ok
+    else
+      render json: { message: 'No books found' }, status: :not_found
+    end
+  end
+
+  def fetch_by_category
+    category_id = params[:category_id]
+
+    if category_id.present?
+      books = Book.includes(:category)
+        .where(categories: { id: category_id })
+        .distinct
+
+      if books.any?
+        render json: books, include: %i[image category]
+      else
+        render json: { error: 'No books found for the given category and recommendation status' }, status: :not_found
+      end
+    else
+      render json: { error: 'Category ID is required' }, status: :unprocessable_entity
+    end
   end
 
   def create
@@ -38,11 +69,12 @@ class Api::V1::BooksController < ApplicationController
     book = Book.find(params[:id])
 
     if book.reserved? || book.borrowed?
-      render json: { status: :unprocessable_entity,
-                     message: 'Book cannot be deleted because it is reserved or borrowed' }
+      render json: {
+        message: 'Book cannot be deleted because it is reserved or borrowed'
+      }, status: :unprocessable_entity
     else
       book.destroy
-      render json: { status: :success, message: 'Book deleted successfully' }
+      render json: { message: 'Book deleted successfully' }, status: :ok
     end
   end
 
@@ -59,7 +91,7 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :description, :file_url, :category_id, :recommended,
+    params.require(:book).permit(:title, :author, :description, :file_url, :category_id, :reads, :downloads, :recommended,
                                  :image_file)
   end
 end

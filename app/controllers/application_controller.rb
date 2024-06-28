@@ -10,7 +10,7 @@ class ApplicationController < ActionController::API
 
   def update_allowed_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
-      u.permit(:email, :password, :password_confirmation, :role)
+      u.permit(:email, :password, :password_confirmation, :role, :preference)
     end
   end
 end
