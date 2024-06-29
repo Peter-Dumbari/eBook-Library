@@ -127,7 +127,7 @@ rails rake:secret
 ```
   rails db:create
   rails db:migrate
-  rails db:seed
+  <!-- rails db:seed -->
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
